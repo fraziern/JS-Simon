@@ -1,10 +1,13 @@
+"use strict";
+
 var intervalID = 0,
   steps = [],
+  strictMode = false,
   currentStep = 0,
   currentLevel = 0,
   dutyCycle = 0.5, // ratio of on time to total cycleLength
-  cycleLengths = [1000,1000,1000,1000,700,700,700,700,400,400,400,400,200,200,200,200,200,200,200,200], 
-    // ms length of on+off
+  cycleLengths = [1000, 1000, 1000, 1000, 700, 700, 700, 700, 400, 400, 400, 400, 200, 200, 200, 200, 200, 200, 200, 200],
+  // ms length of on+off
   sounds = [];
 
 function getRandomStep() {
@@ -20,21 +23,21 @@ function getRandomGame() {
 
 // *** Main game state machine
 var controller = function () {
-  var state = "";
-  var currentHumanPattern = [];
-  var currentHumanStep = 0;
+  var state = "",
+    currentHumanPattern = [],
+    currentHumanStep = 0;
   // States: CPU, HUMAN, MISS, WIN
 
   function _setState(s) {
     state = s;
     $("#hud-state").text(s);
   }
-  
+
   function _setLevel(l) {
     currentLevel = l;
-    $("#hud-level").text(l+1);
+    $("#hud-level").text(l + 1);
   }
-  
+
   function _StartGame() {
     // create random string of 20 steps
     steps = getRandomGame();
@@ -54,17 +57,22 @@ var controller = function () {
     }
   }
 
+  function _Miss() {
+    _setState("MISS");
+    _ShowPattern();
+  }
+
   function _playStep() {
     if (currentStep > currentLevel) {
       // Anything that needs to happen at the end of the pattern play
       // should go here.
       window.clearTimeout(intervalID);
       currentStep = 0;
-      _setState("HUMAN");
-      return;
+      if (strictMode) _StartGame();
+      else _setState("HUMAN");
     } else {
       $("#btn" + steps[currentStep]).addClass("highlight");
-      $(".sound"+steps[currentStep]).trigger('play');
+      $(".sound" + steps[currentStep]).trigger('play');
       currentStep++;
       window.setTimeout(function () {
         $(".sbutton").removeClass("highlight");
@@ -74,7 +82,7 @@ var controller = function () {
 
   function _ColorPress(idnum) {
     // idnum should be 0-3
-    console.log("colorpress: "+idnum+ " state: "+state);
+    console.log("colorpress: " + idnum + " state: " + state);
     if (state == "HUMAN") {
       // steps[0] through steps[currentLevel] is the current pattern to beat
       if (idnum == steps[currentHumanStep]) {
@@ -87,9 +95,7 @@ var controller = function () {
           _ShowPattern();
         }
       } else {
-        // wrong press, non-strict mode
-        _setState("MISS");
-        _ShowPattern();
+        _Miss();
       }
     }
   }
@@ -104,8 +110,8 @@ var controller = function () {
 function buttonDown(thisObj) {
   thisObj.addClass("highlight");
   var $idnum = thisObj.attr("id").charAt(3);
-  console.log("idnum: "+$idnum);
-  $(".sound"+$idnum).trigger('play');
+  console.log("idnum: " + $idnum);
+  $(".sound" + $idnum).trigger('play');
 }
 
 function buttonUp(thisObj, control) {
@@ -116,8 +122,8 @@ function buttonUp(thisObj, control) {
 // Main
 $(function () {
   var gameController = controller(),
-  steps = getRandomGame();
-  
+    steps = getRandomGame();
+
   (function setupSounds() {
     for (var i = 0; i < 4; i++) {
       $(".sound" + i).trigger('load');
@@ -125,15 +131,26 @@ $(function () {
   })();
 
   // Event Handlers
-  $("#test-btn").click(function () {
+  $("#btn-restart").click(function () {
     gameController.startGame();
   });
 
   $(".sbutton").mousedown(function () {
     buttonDown($(this));
-  }).mouseup(function() {
-    buttonUp($(this),gameController);
+  }).mouseup(function () {
+    buttonUp($(this), gameController);
   })
-  
+
+  $("#btn-strict").click(function () {
+    if (strictMode) {
+      $(this).button('reset');
+      strictMode = false;
+    } else {
+      $(this).button('toggle').button('on');
+      strictMode = true;
+    }
+    console.log(strictMode);
+  });
+
   gameController.startGame();
 })

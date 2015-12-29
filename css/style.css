@@ -26,22 +26,22 @@
 }
 
 #btn0 {
-/*  background: #F24950;*/
+  /*  background: #F24950;*/
   background-position: -30px -12px;
 }
 
 #btn1 {
-/*  background: #716A4E;*/
+  /*  background: #716A4E;*/
   background-position: -30px -155px;
 }
 
 #btn2 {
-/*  background: #D8A915;*/
+  /*  background: #D8A915;*/
   background-position: -30px -310px;
 }
 
 #btn3 {
-/*  background: #593332;*/
+  /*  background: #593332;*/
   background-position: -175px -163px;
 }
 
@@ -52,6 +52,7 @@
 
 .btn-set {
   margin: 0 auto;
-  width: 100px;
+  width: 200px;
+  text-align: center;
   margin-top: 50px;
 }

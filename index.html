@@ -28,17 +28,26 @@
     </div>
     <!-- btn-container -->
     <div class="btn-set">
-      <button class="btn" id="test-btn">Restart</button>
+      <button type="button" class="btn btn-primary" id="btn-restart">Restart</button>
+      <button type="button" class="btn btn-primary" data-toggle="button" data-on-text="Strict Mode On" aria-pressed="false" autocomplete="off" id="btn-strict">Strict Mode Off</button>
     </div>
     <div class="hud">
-      <span>Level: </span><span id="hud-level"></span><p></p>
-      <span>State: </span><span id="hud-state"></span><p></p>
-      <span>Pattern: </span><span id="hud-pattern"></span><p></p>
+      <span>Level: </span><span id="hud-level"></span>
+      <p></p>
+      <span>State: </span><span id="hud-state"></span>
+      <p></p>
+      <span>Pattern: </span><span id="hud-pattern"></span>
+      <p></p>
     </div>
   </div>
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script>if (!window.jQuery) { document.write('<script src="./js/jquery-2.1.4.min.js"><\/script>'); }
-</script>
+  <script>
+    if (!window.jQuery) {
+      document.write('<script src="./js/jquery-2.1.4.min.js"><\/script>');
+    }
+  </script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
   <script src="js/index.js"></script>
 
@@ -46,7 +55,7 @@
   <audio src="https://s3.amazonaws.com/freecodecamp/simonSound2.mp3" class="sound1" preload="none"></audio>
   <audio src="https://s3.amazonaws.com/freecodecamp/simonSound3.mp3" class="sound2" preload="none"></audio>
   <audio src="https://s3.amazonaws.com/freecodecamp/simonSound4.mp3" class="sound3" preload="none"></audio>
-  
+
 </body>
 
 </html>
