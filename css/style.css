@@ -1,0 +1,49 @@
+.btn-container {
+  margin: 0 auto;
+  width: 300px;
+  margin-top: 50px;
+}
+
+.row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.sbutton {
+  color: white;
+  width: 150px;
+  height: 150px;
+  margin: 5px;
+  box-sizing: border-box;
+  font-family: 'Slabo 27px', serif;
+  font-size: 48pt;
+  text-align: center;
+}
+
+#btn0 {
+  background: #F24950;
+}
+
+#btn1 {
+  background: #716A4E;
+}
+
+#btn2 {
+  background: #D8A915;
+}
+
+#btn3 {
+  background: #593332;
+}
+
+.highlight {
+  border: 10px solid #0B83D0;
+}
+
+.btn-set {
+  margin: 0 auto;
+  width: 100px;
+  margin-top: 50px;
+}
