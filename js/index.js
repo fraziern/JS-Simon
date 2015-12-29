@@ -3,7 +3,8 @@ var intervalID = 0,
   currentStep = 0,
   currentLevel = 0,
   dutyCycle = 0.5, // ratio of on time to total cycleLength
-  cycleLength = 1000, // ms length of on+off
+  cycleLengths = [1000,1000,1000,1000,700,700,700,700,400,400,400,400,200,200,200,200,200,200,200,200], 
+    // ms length of on+off
   sounds = [];
 
 function getRandomStep() {
@@ -22,22 +23,35 @@ var controller = function () {
   var state = "";
   var currentHumanPattern = [];
   var currentHumanStep = 0;
-  // States:
-  //   CPU
-  //   HUMAN
-  //   MISS
+  // States: CPU, HUMAN, MISS, WIN
 
+  function _setState(s) {
+    state = s;
+    $("#hud-state").text(s);
+  }
+  
+  function _setLevel(l) {
+    currentLevel = l;
+    $("#hud-level").text(l+1);
+  }
+  
   function _StartGame() {
     // create random string of 20 steps
     steps = getRandomGame();
-    currentLevel = 0;
-    state = "CPU";
+    $("#hud-pattern").text(steps);
+    _setLevel(0);
+    _setState("CPU");
     _ShowPattern();
   }
 
   function _ShowPattern() {
-    currentStep = 0;
-    intervalID = window.setInterval(_playStep, cycleLength);
+    // this is the CPU turn, where the pattern is shown
+    currentStep = 0, currentHumanStep = 0;
+    if (currentLevel > 20) {
+      _setState("WIN");
+    } else {
+      intervalID = window.setInterval(_playStep, cycleLengths[currentLevel]);
+    }
   }
 
   function _playStep() {
@@ -46,7 +60,7 @@ var controller = function () {
       // should go here.
       window.clearTimeout(intervalID);
       currentStep = 0;
-      state = "HUMAN";
+      _setState("HUMAN");
       return;
     } else {
       $("#btn" + steps[currentStep]).addClass("highlight");
@@ -54,7 +68,7 @@ var controller = function () {
       currentStep++;
       window.setTimeout(function () {
         $(".sbutton").removeClass("highlight");
-      }, cycleLength * dutyCycle);
+      }, cycleLengths[currentLevel] * dutyCycle);
     }
   }
 
@@ -62,7 +76,21 @@ var controller = function () {
     // idnum should be 0-3
     console.log("colorpress: "+idnum+ " state: "+state);
     if (state == "HUMAN") {
-      // TODO
+      // steps[0] through steps[currentLevel] is the current pattern to beat
+      if (idnum == steps[currentHumanStep]) {
+        // pressed correct button
+        currentHumanStep++;
+        if (currentHumanStep > currentLevel) {
+          // completed pattern
+          _setState("CPU");
+          _setLevel(currentLevel + 1);
+          _ShowPattern();
+        }
+      } else {
+        // wrong press, non-strict mode
+        _setState("MISS");
+        _ShowPattern();
+      }
     }
   }
 
@@ -96,11 +124,9 @@ $(function () {
     }
   })();
 
-  gameController.startGame();
-
   // Event Handlers
   $("#test-btn").click(function () {
-    gameController.showPatternTest();
+    gameController.startGame();
   });
 
   $(".sbutton").mousedown(function () {
@@ -108,4 +134,6 @@ $(function () {
   }).mouseup(function() {
     buttonUp($(this),gameController);
   })
+  
+  gameController.startGame();
 })

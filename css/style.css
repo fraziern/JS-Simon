@@ -20,26 +20,34 @@
   font-family: 'Slabo 27px', serif;
   font-size: 48pt;
   text-align: center;
+  background-image: url('http://image.shutterstock.com/z/stock-vector-lucha-libre-luchador-mexican-wrestling-masks-color-vector-icons-set-character-face-person-sport-327187910.jpg');
+  background-repeat: no-repeat;
+  background-size: 500px 500px;
 }
 
 #btn0 {
-  background: #F24950;
+/*  background: #F24950;*/
+  background-position: -30px -12px;
 }
 
 #btn1 {
-  background: #716A4E;
+/*  background: #716A4E;*/
+  background-position: -30px -155px;
 }
 
 #btn2 {
-  background: #D8A915;
+/*  background: #D8A915;*/
+  background-position: -30px -310px;
 }
 
 #btn3 {
-  background: #593332;
+/*  background: #593332;*/
+  background-position: -175px -163px;
 }
 
 .highlight {
-  border: 10px solid #0B83D0;
+  -webkit-filter: saturate(8);
+  filter: saturate(8);
 }
 
 .btn-set {
