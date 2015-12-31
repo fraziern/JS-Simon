@@ -3,28 +3,25 @@
 var intervalID = 0,
   steps = [],
   strictMode = false,
-  currentStep = 0,
+  currentCPUStep = 0,
   currentLevel = 0,
   dutyCycle = 0.5, // ratio of on time to total cycleLength
   cycleLengths = [1000, 1000, 1000, 1000, 700, 700, 700, 700, 400, 400, 400, 400, 200, 200, 200, 200, 200, 200, 200, 200],
   // ms length of on+off
+  winLevel = 4,
   sounds = [];
-
-function getRandomStep() {
-  // return random int between 0 and 3
-  return Math.floor(Math.random() * 4);
-}
 
 function getRandomGame() {
   // return random array of 20 ints between 0 and 3
-  for (var a = [], i = 0; i < 20; i++) a[i] = getRandomStep();
+  for (var a = [], i = 0; i < 20; i++) {
+    a[i] = Math.floor(Math.random() * 4);
+  }
   return a;
 }
 
 // *** Main game state machine
 var controller = function () {
   var state = "",
-    currentHumanPattern = [],
     currentHumanStep = 0;
   // States: CPU, HUMAN, MISS, WIN
 
@@ -49,31 +46,51 @@ var controller = function () {
 
   function _ShowPattern() {
     // this is the CPU turn, where the pattern is shown
-    currentStep = 0, currentHumanStep = 0;
-    if (currentLevel > 20) {
-      _setState("WIN");
-    } else {
-      intervalID = window.setInterval(_playStep, cycleLengths[currentLevel]);
-    }
+    if (state == "CPU" || state == "MISS") {
+      currentCPUStep = 0, currentHumanStep = 0;
+      if (currentLevel >= winLevel) {
+        _Win();
+      } else {
+        intervalID = window.setInterval(_playStep, cycleLengths[currentLevel]);
+      }
+    } else console.log("_ShowPattern in wrong state.");
   }
 
   function _Miss() {
+    // This runs when there's a miss, whether or not we need to restart the game
     _setState("MISS");
+    // play miss sound, show defeat announce
+    _Announce();
     _ShowPattern();
   }
 
+  function _Win() {
+    _setState("WIN");
+    // play win sound, show win announce
+    _Announce();
+  }
+
+  function _Announce() {
+    var type = (state === "WIN") ? "W" : "L";
+    $(".sound" + type).trigger('play');
+    $(".announce-" + type).addClass("show-announce");
+    window.setTimeout(function () {
+      $(".announce-" + type).removeClass("show-announce");
+    }, 1500);
+  }
+
   function _playStep() {
-    if (currentStep > currentLevel) {
+    if (currentCPUStep > currentLevel) {
       // Anything that needs to happen at the end of the pattern play
       // should go here.
       window.clearTimeout(intervalID);
-      currentStep = 0;
-      if (strictMode) _StartGame();
+      currentCPUStep = 0;
+      if (strictMode && state == "MISS") _StartGame();
       else _setState("HUMAN");
     } else {
-      $("#btn" + steps[currentStep]).addClass("highlight");
-      $(".sound" + steps[currentStep]).trigger('play');
-      currentStep++;
+      $("#btn" + steps[currentCPUStep]).addClass("highlight");
+      $(".sound" + steps[currentCPUStep]).trigger('play');
+      currentCPUStep++;
       window.setTimeout(function () {
         $(".sbutton").removeClass("highlight");
       }, cycleLengths[currentLevel] * dutyCycle);
@@ -97,7 +114,7 @@ var controller = function () {
       } else {
         _Miss();
       }
-    }
+    } else console.log("Pressed button in wrong state.");
   }
 
   return {
@@ -107,6 +124,7 @@ var controller = function () {
   };
 };
 
+// click handler callbacks
 function buttonDown(thisObj) {
   thisObj.addClass("highlight");
   var $idnum = thisObj.attr("id").charAt(3);
@@ -128,6 +146,8 @@ $(function () {
     for (var i = 0; i < 4; i++) {
       $(".sound" + i).trigger('load');
     }
+    $(".soundL").trigger('load');
+    $(".soundW").trigger('load');
   })();
 
   // Event Handlers
