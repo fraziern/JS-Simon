@@ -8,8 +8,14 @@ var intervalID = 0,
   dutyCycle = 0.5, // ratio of on time to total cycleLength
   cycleLengths = [1000, 1000, 1000, 1000, 700, 700, 700, 700, 400, 400, 400, 400, 200, 200, 200, 200, 200, 200, 200, 200],
   // ms length of on+off
-  winLevel = 4,
-  sounds = [];
+  winLevel = 20,
+  sounds = [],
+  soundURLs = [
+    "./assets/wrestling_1.mp3",
+    "./assets/wrestling_2.mp3",
+    "./assets/wrestling_3.mp3",
+    "./assets/wrestling_4.mp3"
+  ];
 
 function getRandomGame() {
   // return random array of 20 ints between 0 and 3
@@ -89,7 +95,8 @@ var controller = function () {
       else _setState("HUMAN");
     } else {
       $("#btn" + steps[currentCPUStep]).addClass("highlight");
-      $(".sound" + steps[currentCPUStep]).trigger('play');
+      //      $(".sound" + steps[currentCPUStep]).trigger('play');
+      sounds[steps[currentCPUStep]].stop().play();
       currentCPUStep++;
       window.setTimeout(function () {
         $(".sbutton").removeClass("highlight");
@@ -129,7 +136,8 @@ function buttonDown(thisObj) {
   thisObj.addClass("highlight");
   var $idnum = thisObj.attr("id").charAt(3);
   console.log("idnum: " + $idnum);
-  $(".sound" + $idnum).trigger('play');
+  //  $(".sound" + $idnum).trigger('play');
+  sounds[$idnum].stop().play();
 }
 
 function buttonUp(thisObj, control) {
@@ -145,6 +153,8 @@ $(function () {
   (function setupSounds() {
     for (var i = 0; i < 4; i++) {
       $(".sound" + i).trigger('load');
+      sounds[i] = new buzz.sound(soundURLs[i]);
+      sounds[i].load();
     }
     $(".soundL").trigger('load');
     $(".soundW").trigger('load');
