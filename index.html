@@ -15,7 +15,11 @@
 
   <link href='https://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'>
 
+  <div class="title">
+    &iexcl;SIMON!
+  </div>
   <div class="container">
+
     <div class="btn-container">
       <div class="row" id="row1">
         <div class="sbutton" id="btn0">0</div>
@@ -27,18 +31,15 @@
       </div>
       <div class="announce-W announce">&iexcl;VICTORIA!</div>
       <div class="announce-L announce">&iexcl;MUERTE!</div>
-    </div>
-    <!-- btn-container -->
+    </div> <!-- btn-container -->
     <div class="side-container">
-      <div class="side-box">Level
-        <div id="hud-level"></div>
+      <button type="button" class="btn" id="btn-restart">Restart</button>
+      <div class="level-box">
+        Level
+        <div id="hud-level">
       </div>
-      <!--    side-box-->
-      <div class="btn-set">
-        <button type="button" class="btn btn-primary" id="btn-restart">Restart</button>
-        <button type="button" class="btn btn-primary" data-toggle="button" data-on-text="Strict Mode On" aria-pressed="false" autocomplete="off" id="btn-strict">Strict Mode Off</button>
-      </div>
-      <!--    btn-set-->
+      </div> <!--    side-box-->
+      <button type="button" class="btn" data-toggle="button" data-on-text="Strict Mode<br>On" aria-pressed="false" autocomplete="off" id="btn-strict">Strict Mode<br>Off</button>
 
     </div>
     <!--    side-container-->

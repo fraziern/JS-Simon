@@ -1,70 +1,70 @@
-.container {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: space-around;
-  padding-top: 50px;
+body {
   font-family: 'Patua One', cursive;
 }
-
+.title {
+  width: 300px;
+  margin: 0 auto;
+  font-size: 60pt;
+  text-align: center;
+  color: #E18728;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+.container {
+  position: relative;
+  padding-top: 30px;
+}
 .btn-container {
   width: 300px;
+  margin: 0 auto;
 }
-
 .side-container {
-  width: 120px;
-  dispay: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  margin: 20px;
+  width: 320px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  margin: 0 auto;
 }
-
-.side-box {
+.level-box {
   border-radius: 15px;
   height: 120px;
-  background: #D8A915;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  margin-bottom: 20px;
+  width: 110px;
+  flex: 1;
+  margin-right: 10px;
+  margin-left: 10px;
+  background: #EADDEE;
   text-align: center;
   font-size: 20pt;
   padding-top: 10px;
+  -webkit-box-shadow: 0px 7px 19px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 7px 19px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 7px 19px 0px rgba(0, 0, 0, 0.75);
 }
-
 #hud-level {
   font-size: 40pt;
   margin-top: -15px
 }
-
-.btn-set {
-  text-align: center;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-}
-
-.btn {
-  width: 100%;
+.btn, btn:focus {
   margin-bottom: 10px;
-  background: #593332;
+  background: none;
+  color: black;
+  border: none;
+  flex: 1;
+  text-align: center;
+  padding: 0;
 }
-
+.btn:hover {
+  background: #EADDEE;
+  -webkit-box-shadow: 0px 7px 19px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 7px 19px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 7px 19px 0px rgba(0, 0, 0, 0.75);
+  color: black;
+}
 .row {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
-
 .sbutton {
   color: white;
   width: 150px;
@@ -77,45 +77,37 @@
   background-repeat: no-repeat;
   background-size: 500px 500px;
 }
-
 #btn0 {
   /*  background: #F24950;*/
   background-position: -30px -12px;
 }
-
 #btn1 {
   /*  background: #716A4E;*/
   background-position: -30px -155px;
 }
-
 #btn2 {
   /*  background: #D8A915;*/
   background-position: -30px -310px;
 }
-
 #btn3 {
   /*  background: #593332;*/
   background-position: -175px -163px;
 }
-
-.highlight,
-.sbutton:hover {
+.highlight, .sbutton:hover {
   -webkit-filter: saturate(8);
   filter: saturate(8);
 }
-
 .announce {
   font-size: 48pt;
   position: absolute;
+  top: 150px;
   text-align: center;
+  margin: 0 auto;
   width: 300px;
-  left: 175px;
-  top: 165px;
   opacity: 0;
   color: #FF4D09;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
-
 .show-announce {
   -webkit-transition: -webkit-transform 2s ease, opacity 2s ease;
   transition: transform 2s ease, opacity 2s ease;
