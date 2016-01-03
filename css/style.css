@@ -11,14 +11,14 @@ body {
 }
 .container {
   position: relative;
-  padding-top: 30px;
+  padding-top: 20px;
 }
 .btn-container {
   width: 300px;
   margin: 0 auto;
 }
 .side-container {
-  width: 320px;
+  width: 300px;
   display: flex;
   justify-content: center;
   flex-direction: row;
@@ -26,7 +26,7 @@ body {
 }
 .level-box {
   border-radius: 15px;
-  height: 120px;
+  height: 110px;
   width: 110px;
   flex: 1;
   margin-right: 10px;
@@ -115,4 +115,38 @@ body {
   -webkit-transform: scale(2);
   -ms-transform: scale(2);
   transform: scale(2);
+}
+.loading {
+  display = none;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+@media all and (max-width: 320px) {
+.title {
+  margin-top: -10px;
+  margin-bottom: -20px;
+}
+  .container {
+    padding-top: 0px;
+  }
+  #hud-level {
+    font-size: 30pt;
+    margin-top: -15px
+  }
+  .level-box {
+    border-radius: 15px;
+    height: 80px;
+    width: 100px;
+    flex: 1;
+    margin-right: 10px;
+    margin-left: 10px;
+    background: #EADDEE;
+    text-align: center;
+    font-size: 18pt;
+    padding-top: 5px;
+    -webkit-box-shadow: 0px 7px 19px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 7px 19px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 7px 19px 0px rgba(0, 0, 0, 0.75);
+  }
 }

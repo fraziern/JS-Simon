@@ -106,7 +106,6 @@ var controller = function () {
 
   function _ColorPress(idnum) {
     // idnum should be 0-3
-    console.log("colorpress: " + idnum + " state: " + state);
     if (state == "HUMAN") {
       // steps[0] through steps[currentLevel] is the current pattern to beat
       if (idnum == steps[currentHumanStep]) {
@@ -135,8 +134,6 @@ var controller = function () {
 function buttonDown(thisObj) {
   thisObj.addClass("highlight");
   var $idnum = thisObj.attr("id").charAt(3);
-  console.log("idnum: " + $idnum);
-  //  $(".sound" + $idnum).trigger('play');
   sounds[$idnum].stop().play();
 }
 
@@ -149,16 +146,6 @@ function buttonUp(thisObj, control) {
 $(function () {
   var gameController = controller(),
     steps = getRandomGame();
-
-  (function setupSounds() {
-    for (var i = 0; i < 4; i++) {
-      $(".sound" + i).trigger('load');
-      sounds[i] = new buzz.sound(soundURLs[i]);
-      sounds[i].load();
-    }
-    $(".soundL").trigger('load');
-    $(".soundW").trigger('load');
-  })();
 
   // Event Handlers
   $("#btn-restart").click(function () {
@@ -182,5 +169,25 @@ $(function () {
     console.log(strictMode);
   });
 
-  gameController.startGame();
+  (function setupSounds() {
+    for (var i = 0; i < 4; i++) {
+      sounds[i] = new buzz.sound(soundURLs[i], {
+        preload: true
+      });
+    }
+    console.log("setting up sounds");
+    buzz.all().load().bind("loadstart", function(e) {
+      // start loading button sounds
+      console.log("loading sounds");
+      $(".loading").css("display", "block");
+    }).bind("loadeddata", function(e) {
+      // button sounds loaded
+      console.log("sounds loaded");
+      $(".loading").css("display", "none");
+      //gameController.startGame();
+    });
+    $(".soundL").trigger('load');
+    $(".soundW").trigger('load');
+  })();
+gameController.startGame();
 })
