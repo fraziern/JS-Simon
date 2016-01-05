@@ -16,6 +16,7 @@ body {
 .btn-container {
   width: 300px;
   margin: 0 auto;
+  overflow: hidden;
 }
 .side-container {
   width: 300px;
@@ -76,6 +77,8 @@ body {
   background-image: url('http://image.shutterstock.com/z/stock-vector-lucha-libre-luchador-mexican-wrestling-masks-color-vector-icons-set-character-face-person-sport-327187910.jpg');
   background-repeat: no-repeat;
   background-size: 500px 500px;
+  -webkit-transition: -webkit-transform 1s ease;
+  transition: transform 0.3s ease;
 }
 #btn0 {
   /*  background: #F24950;*/
@@ -93,9 +96,25 @@ body {
   /*  background: #593332;*/
   background-position: -175px -163px;
 }
-.highlight, .sbutton:hover {
+.sbutton.highlight, .sbutton.highlight.disabled:hover {
   -webkit-filter: saturate(8);
   filter: saturate(8);
+  transform: scale(0.95);
+  -webkit-transform: scale(0.95);
+  -ms-transform: scale(0.95);
+}
+.sbutton.highlight {
+  cursor: pointer;
+}
+.sbutton:hover {
+  -webkit-filter: saturate(8);
+  filter: saturate(8);
+  cursor: pointer;
+}
+.sbutton.disabled:hover {
+  filter: none;
+  -webkit-filter: none;
+  cursor: auto;
 }
 .announce {
   font-size: 48pt;
@@ -105,6 +124,7 @@ body {
   margin: 0 auto;
   width: 300px;
   opacity: 0;
+  z-index: -1000;
   color: #FF4D09;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
@@ -115,6 +135,7 @@ body {
   -webkit-transform: scale(2);
   -ms-transform: scale(2);
   transform: scale(2);
+  z-index: 0;
 }
 .loading {
   display = none;

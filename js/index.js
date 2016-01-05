@@ -34,6 +34,11 @@ var controller = function () {
   function _setState(s) {
     state = s;
     $("#hud-state").text(s);
+    if (s === "HUMAN") {
+      $(".sbutton").removeClass("disabled");
+    } else {
+      $(".sbutton").addClass("disabled");
+    }
   }
 
   function _setLevel(l) {
@@ -67,7 +72,9 @@ var controller = function () {
     _setState("MISS");
     // play miss sound, show defeat announce
     _Announce();
-    _ShowPattern();
+    window.setTimeout(function() {
+      _ShowPattern();
+    }, 1000);
   }
 
   function _Win() {
@@ -78,11 +85,11 @@ var controller = function () {
 
   function _Announce() {
     var type = (state === "WIN") ? "W" : "L";
-    $(".sound" + type).trigger('play');
+    $(".sound" + type).trigger('play').fadeOut(1000);
     $(".announce-" + type).addClass("show-announce");
     window.setTimeout(function () {
       $(".announce-" + type).removeClass("show-announce");
-    }, 1500);
+    }, 1000);
   }
 
   function _playStep() {
@@ -153,9 +160,9 @@ $(function () {
   });
 
   $(".sbutton").mousedown(function () {
-    buttonDown($(this));
+    if(!$(this).hasClass("disabled")) buttonDown($(this));
   }).mouseup(function () {
-    buttonUp($(this), gameController);
+    if(!$(this).hasClass("disabled")) buttonUp($(this), gameController);
   })
 
   $("#btn-strict").click(function () {
